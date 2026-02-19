@@ -1,34 +1,35 @@
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
-namespace Mission06_Bede.Models
+namespace Mission06_Bede.Models;
+
+public partial class Movie
 {
-    public class Movie
-    {
-        public int MovieId { get; set; }
+    [Key]
+    public int MovieId { get; set; }
 
-        [Required]
-        public string Category { get; set; } = "";
+    public int? CategoryId { get; set; }
 
-        [Required]
-        public string Title { get; set; } = "";
+    public string Title { get; set; } = null!;
 
-        [Required]
-        public int Year { get; set; }
+    public int Year { get; set; }
 
-        [Required]
-        public string Director { get; set; } = "";
+    public string? Director { get; set; }
 
-        [Required]
-        public string Rating { get; set; } = ""; // G, PG, PG-13, R
+    public string? Rating { get; set; }
 
-        // Not required
-        public bool Edited { get; set; }
+    public int Edited { get; set; }
 
-        // Not required
-        public string? LentTo { get; set; }
+    public string? LentTo { get; set; }
 
-        // Not required, max 25 chars
-        [StringLength(25)]
-        public string? Notes { get; set; }
-    }
+    public int CopiedToPlex { get; set; }
+
+    public string? Notes { get; set; }
+
+    [ForeignKey("CategoryId")]
+    [InverseProperty("Movies")]
+    public virtual Category? Category { get; set; }
 }
